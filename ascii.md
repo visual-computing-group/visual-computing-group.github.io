@@ -75,19 +75,17 @@ let resolution = 7;
 let fontsize = 12;
 
 function setup() {
-  createCanvas(599, 317);
-  let letters = " .`-_':,;^=+/\"|)\\<>)iv%xclrs{*}I?!][1taeo7zjLu" +
-  "nT#JCwfy325Fp6mqSghVd4EgXPGZbYkOA&8U$@";
-  simpson = createVideo(['../data/pixar.mov', '../data/pixar.webm']);
+  createCanvas(503, 238);
+  let letters = "@&%#*vi<>+=^;,:'. ";
+  simpson = createVideo(['../data/homero.mov', '../data/homero.webm']);
   for (let i = 0; i < 256; i++) {
     let index = int(map(i, 0, 256, 0, letters.length));
-    ascii[255-i] = letters[index];
+    ascii[i] = letters[index];
   }
   button = createButton('play');
   button.mousePressed(toggleVid);
   noStroke();
   fill(0);
-
 }
 
 function toggleVid() {
