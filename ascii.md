@@ -75,7 +75,7 @@ let resolution = 7;
 let fontsize = 12;
 
 function setup() {
-  createCanvas(506, 240);
+  createCanvas(506,240);
   let letters = "@&%#*vi<>+=^;,:'. ";
   simpson = createVideo(['../data/homero.mov', '../data/homero.webm']);
   for (let i = 0; i < 256; i++) {
