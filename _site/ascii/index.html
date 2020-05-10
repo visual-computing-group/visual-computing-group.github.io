@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      Convertir video a Ascii &middot; Computación Visual
+    
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/public/css/poole.css">
+  <link rel="stylesheet" href="/public/css/syntax.css">
+  <link rel="stylesheet" href="/public/css/lanyon.css">
+  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Serif:400,400italic,700|PT+Sans:400">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/public/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+</head>
+
+
+  <body>
+
+    <!-- Target for toggling the sidebar `.sidebar-checkbox` is for regular
+     styles, `#sidebar-checkbox` for behavior. -->
+<input type="checkbox" class="sidebar-checkbox" id="sidebar-checkbox">
+
+<!-- Toggleable sidebar -->
+<div class="sidebar" id="sidebar">
+  <div class="sidebar-item">
+    <p>Un grupo de Computación Visual de la Universidad Nacional de Colombia</p>
+  </div>
+
+  <nav class="sidebar-nav">
+    <a class="sidebar-nav-item" href="/">Home</a>
+    <a class="sidebar-nav-item" href="/jsnarvaezb/"> jsnarvaezb</a>
+    <a class="sidebar-nav-item" href="/diefrodriguezcha/"> diefrodriguezcha</a>
+    <a class="sidebar-nav-item" href="/ascii/"> Video ascii</a>
+    <a class="sidebar-nav-item" href="/about/"> about</a>
+          
+  </nav>
+</div>
+
+
+    <!-- Wrap is the content to shift when toggling the sidebar. We wrap the
+         content to avoid any CSS collisions with our real content. -->
+    <div class="wrap">
+      <div class="masthead">
+        <div class="container">
+          <label for="sidebar-checkbox" class="sidebar-toggle"></label>
+
+          <h3 class="masthead-title">
+            <a href="/" title="Home">Computación Visual</a>
+            <small>Universidad Nacional de Colombia</small>
+          </h3>
+        </div>
+      </div>
+
+      <div class="container content">
+        <div class="page">
+  <h1 class="page-title">Convertir video a Ascii</h1>
+  <div id="sketch-holder"></div>
+
+<p>En este ejemplo se convierte un video a ascii</p>
+
+<p>Este es el código utilizado para este ejercicio.</p>
+
+<hr />
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.0.0/p5.js"></script>
+
+<script>
+let playing = false;
+let fingers;
+let button;
+let ascii = [];
+let resolution = 7;
+let fontsize = 12;
+
+function setup() {
+  createCanvas(503, 238);
+  // especifica múltples formatos para distintos navegadores
+  //textSize(fontsize);
+  let letters = "@&%#*vi<>+=^;,:'. ";//" .`-_':,;^=+/\"|)\\<>)iv%xclrs{*}I?!][1taeo7zjLu" +
+  //"nT#JCwfy325Fp6mqSghVd4EgXPGZbYkOA&8U$@";
+  fingers = createVideo(['../data/homero.mov', '../data/homero.webm']);
+  for (let i = 0; i < 256; i++) {
+    let index = int(map(i, 0, 256, 0, letters.length));
+    ascii[i] = letters[index];
+  }
+  //console.log(ascii)
+  button = createButton('play');
+  button.mousePressed(toggleVid);
+  //fingers.loop();
+  noStroke();
+  fill(0);
+}
+
+function toggleVid() {
+  if (playing) {
+    fingers.pause();
+    button.html('play');
+  } else {
+    fingers.loop();
+    button.html('pause');
+  }
+  playing = !playing;
+}
+
+function draw() {
+  background(255);
+  fingers.loadPixels();
+  for (let y = 0; y < height; y += resolution) {
+    for (let x = 0; x < width; x += resolution) {
+      let index = (x + y * fingers.width) * 4
+      let r = fingers.pixels[index + 0];
+      let g = fingers.pixels[index + 1];
+      let b = fingers.pixels[index + 2];
+      let brig = (r+g+b)/3
+      text(ascii[int(brig)], x, y);
+    }
+  }
+}
+</script>
+
+<hr />
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">let</span> <span class="nx">playing</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
+<span class="kd">let</span> <span class="nx">fingers</span><span class="p">;</span>
+<span class="kd">let</span> <span class="nx">button</span><span class="p">;</span>
+<span class="kd">let</span> <span class="nx">ascii</span> <span class="o">=</span> <span class="p">[];</span>
+<span class="kd">let</span> <span class="nx">resolution</span> <span class="o">=</span> <span class="mi">7</span><span class="p">;</span>
+<span class="kd">let</span> <span class="nx">fontsize</span> <span class="o">=</span> <span class="mi">12</span><span class="p">;</span>
+
+<span class="kd">function</span> <span class="nx">setup</span><span class="p">()</span> <span class="p">{</span>
+  <span class="nx">createCanvas</span><span class="p">(</span><span class="mi">599</span><span class="p">,</span><span class="err"> </span><span class="mi">317</span><span class="p">);</span>
+  <span class="c1">// especifica múltples formatos para distintos navegadores</span>
+  <span class="c1">//textSize(fontsize);</span>
+  <span class="kd">let</span> <span class="nx">letters</span> <span class="o">=</span> <span class="dl">"</span><span class="s2"> .`-_':,;^=+/</span><span class="se">\"</span><span class="s2">|)</span><span class="se">\\</span><span class="s2">&lt;&gt;)iv%xclrs{*}I?!][1taeo7zjLu</span><span class="dl">"</span> <span class="o">+</span>
+  <span class="dl">"</span><span class="s2">nT#JCwfy325Fp6mqSghVd4EgXPGZbYkOA&amp;8U$@</span><span class="dl">"</span><span class="p">;</span>
+  <span class="nx">fingers</span> <span class="o">=</span> <span class="nx">createVideo</span><span class="p">([</span><span class="dl">'</span><span class="s1">../data/pixar.mov</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">../data/pixar.webm</span><span class="dl">'</span><span class="p">]);</span>
+  <span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="mi">256</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">let</span> <span class="nx">index</span> <span class="o">=</span> <span class="nx">int</span><span class="p">(</span><span class="nx">map</span><span class="p">(</span><span class="nx">i</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">256</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="nx">letters</span><span class="p">.</span><span class="nx">length</span><span class="p">));</span>
+    <span class="c1">//console.log(int(abs(index)));</span>
+    <span class="nx">ascii</span><span class="p">[</span><span class="mi">255</span><span class="o">-</span><span class="nx">i</span><span class="p">]</span> <span class="o">=</span> <span class="nx">letters</span><span class="p">[</span><span class="nx">index</span><span class="p">];</span>
+  <span class="p">}</span>
+  <span class="c1">//console.log(ascii)</span>
+  <span class="nx">button</span> <span class="o">=</span> <span class="nx">createButton</span><span class="p">(</span><span class="dl">'</span><span class="s1">play</span><span class="dl">'</span><span class="p">);</span>
+  <span class="nx">button</span><span class="p">.</span><span class="nx">mousePressed</span><span class="p">(</span><span class="nx">toggleVid</span><span class="p">);</span>
+  <span class="c1">//fingers.loop();</span>
+  <span class="nx">noStroke</span><span class="p">();</span>
+  <span class="nx">fill</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+
+<span class="p">}</span>
+
+<span class="kd">function</span> <span class="nx">toggleVid</span><span class="p">()</span> <span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="nx">playing</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">fingers</span><span class="p">.</span><span class="nx">pause</span><span class="p">();</span>
+    <span class="nx">button</span><span class="p">.</span><span class="nx">html</span><span class="p">(</span><span class="dl">'</span><span class="s1">play</span><span class="dl">'</span><span class="p">);</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="nx">fingers</span><span class="p">.</span><span class="nx">loop</span><span class="p">();</span>
+    <span class="nx">button</span><span class="p">.</span><span class="nx">html</span><span class="p">(</span><span class="dl">'</span><span class="s1">pause</span><span class="dl">'</span><span class="p">);</span>
+  <span class="p">}</span>
+  <span class="nx">playing</span> <span class="o">=</span> <span class="o">!</span><span class="nx">playing</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kd">function</span> <span class="nx">draw</span><span class="p">()</span> <span class="p">{</span>
+  <span class="nx">background</span><span class="p">(</span><span class="mi">255</span><span class="p">);</span>
+  <span class="nx">fingers</span><span class="p">.</span><span class="nx">loadPixels</span><span class="p">();</span>
+  <span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">y</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">y</span> <span class="o">&lt;</span> <span class="nx">height</span><span class="p">;</span> <span class="nx">y</span> <span class="o">+=</span> <span class="nx">resolution</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">x</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">x</span> <span class="o">&lt;</span> <span class="nx">width</span><span class="p">;</span> <span class="nx">x</span> <span class="o">+=</span> <span class="nx">resolution</span><span class="p">)</span> <span class="p">{</span>
+      <span class="kd">let</span> <span class="nx">index</span> <span class="o">=</span> <span class="p">(</span><span class="nx">x</span> <span class="o">+</span> <span class="nx">y</span> <span class="o">*</span> <span class="nx">fingers</span><span class="p">.</span><span class="nx">width</span><span class="p">)</span> <span class="o">*</span> <span class="mi">4</span>
+      <span class="kd">let</span> <span class="nx">r</span> <span class="o">=</span> <span class="nx">fingers</span><span class="p">.</span><span class="nx">pixels</span><span class="p">[</span><span class="nx">index</span> <span class="o">+</span> <span class="mi">0</span><span class="p">];</span>
+      <span class="kd">let</span> <span class="nx">g</span> <span class="o">=</span> <span class="nx">fingers</span><span class="p">.</span><span class="nx">pixels</span><span class="p">[</span><span class="nx">index</span> <span class="o">+</span> <span class="mi">1</span><span class="p">];</span>
+      <span class="kd">let</span> <span class="nx">b</span> <span class="o">=</span> <span class="nx">fingers</span><span class="p">.</span><span class="nx">pixels</span><span class="p">[</span><span class="nx">index</span> <span class="o">+</span> <span class="mi">2</span><span class="p">];</span>
+      <span class="kd">let</span> <span class="nx">brig</span> <span class="o">=</span> <span class="p">(</span><span class="nx">r</span><span class="o">+</span><span class="nx">g</span><span class="o">+</span><span class="nx">b</span><span class="p">)</span><span class="o">/</span><span class="mi">3</span>
+      <span class="nx">text</span><span class="p">(</span><span class="nx">ascii</span><span class="p">[</span><span class="nx">int</span><span class="p">(</span><span class="nx">brig</span><span class="p">)],</span> <span class="nx">x</span><span class="p">,</span> <span class="nx">y</span><span class="p">);</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<hr />
+
+</div>
+
+      </div>
+    </div>
+
+  </body>
+</html>

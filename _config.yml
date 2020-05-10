@@ -1,5 +1,5 @@
 # Dependencies
-markdown:         red carpet
+markdown:         red carpet  #kramdown
 pygments:         true
 
 # Permalinks
