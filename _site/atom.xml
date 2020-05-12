@@ -46,6 +46,7 @@
     <a class="sidebar-nav-item" href="/jsnarvaezb/"> jsnarvaezb</a>
     <a class="sidebar-nav-item" href="/diefrodriguezcha/"> diefrodriguezcha</a>
     <a class="sidebar-nav-item" href="/ascii/"> Video ascii</a>
+    <a class="sidebar-nav-item" href="/images"> Procesamiento de imágenes</a>
     <a class="sidebar-nav-item" href="/about/"> about</a>
           
   </nav>
@@ -75,7 +76,7 @@
  <title>Computación Visual</title>
  <link href="http://localhost:4000/atom.xml" rel="self"/>
  <link href="http://localhost:4000/"/>
- <updated>2020-05-10T14:56:08-05:00</updated>
+ <updated>2020-05-11T20:40:27-05:00</updated>
  <id>http://localhost:4000</id>
  <author>
    <name></name>

@@ -1,0 +1,219 @@
+I",N<div id="sketch-holder"></div>
+
+<p>Este es el código utilizado para este ejercicio.</p>
+
+<hr />
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.0.0/p5.js"></script>
+
+<script>
+let sel;
+let img;
+let img2;
+let out;
+let v = 1.0 / 9.0;
+let kernel = [[ v, v, v ], [ v, v, v ], [ v, v, v ]]
+
+function setup() {
+  img = loadImage('../data/bird.png');
+  img2 = loadImage('../data/bird.png');
+  createCanvas(890, 261);
+  textAlign(CENTER);
+  background(240);
+  sel = createSelect();
+  sel.position(500, 1500);
+  sel.option('Escala de grises');
+  sel.option('Blur');
+  sel.option('Ascii');
+  sel.selected('Sharpen');
+  sel.changed(mySelectEvent);
+}
+
+function draw(){
+  image(img, 445, 0);
+  
+}
+
+function mySelectEvent() {
+  let item = sel.value();
+  background(250);
+  if(item == 'Blur'){
+   blur();
+  }
+  if(item == 'Escala de grises'){
+   w_and_b();
+   image(out, 0, 0);
+  }
+  if(item == 'Ascii'){
+   ascii();
+  }
+}
+
+function blur (){
+  out = img2;
+  out.loadPixels();
+  
+  for (let x = 1; x < img.width; x++) {
+    for (let y = 1; y < img.height; y++) {
+      let sum = 0; 
+      for (kx = -1; kx <= 1; kx++) {
+        for (ky = -1; ky <= 1; ky++) {
+          let xpos = x + kx;
+          let ypos = y + ky;
+          let val = red(img.get(xpos, ypos));
+          sum += kernel[kx+1][ky+1] * val;
+        }
+      }
+      out.set(x, y, color(sum));
+    }
+  }
+  out.updatePixels();
+}
+
+
+function w_and_b(){
+  out = img2;
+  out.loadPixels();
+  for (let x = 1; x < out.width; x++) {
+    for (let y = 1; y < out.height; y++) {
+      let index = (x + y * out.width) * 4
+      let r = out.pixels[index + 0];
+      let g = out.pixels[index + 1];
+      let b = out.pixels[index + 2];
+      let sum = (r + g + b)/3; 
+      out.set(x, y, color(sum, sum, sum));
+    }
+  }
+  out.updatePixels();
+}
+
+function ascii(){
+  let ascii = [];
+  let resolution = 7;  
+  let letters = "@&%#*vi<>+=^;,:'. ";
+  for (let i = 0; i < 256; i++) {
+    let index = int(map(i, 0, 256, 0, letters.length));
+    ascii[i] = letters[index];
+  }
+  out = img2;
+  out.loadPixels();
+  for (let y = 0; y < out.height; y += resolution) {
+    for (let x = 0; x < out.width; x += resolution) {
+      let index = (x + y * out.width) * 4
+      let r = out.pixels[index + 0];
+      let g = out.pixels[index + 1];
+      let b = out.pixels[index + 2];
+      let brig = (r+g+b)/3
+      text(ascii[int(brig)], x, y);
+    }
+  }
+}
+</script>
+
+<hr />
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">let</span> <span class="nx">sel</span><span class="p">;</span>
+<span class="kd">let</span> <span class="nx">img</span><span class="p">;</span>
+<span class="kd">let</span> <span class="nx">img2</span><span class="p">;</span>
+<span class="kd">let</span> <span class="nx">out</span><span class="p">;</span>
+<span class="kd">let</span> <span class="nx">v</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="mf">9.0</span><span class="p">;</span>
+<span class="kd">let</span> <span class="nx">kernel</span> <span class="o">=</span> <span class="p">[[</span> <span class="nx">v</span><span class="p">,</span> <span class="nx">v</span><span class="p">,</span> <span class="nx">v</span> <span class="p">],</span> <span class="p">[</span> <span class="nx">v</span><span class="p">,</span> <span class="nx">v</span><span class="p">,</span> <span class="nx">v</span> <span class="p">],</span> <span class="p">[</span> <span class="nx">v</span><span class="p">,</span> <span class="nx">v</span><span class="p">,</span> <span class="nx">v</span> <span class="p">]]</span>
+
+<span class="kd">function</span> <span class="nx">setup</span><span class="p">()</span> <span class="p">{</span>
+  <span class="nx">img</span> <span class="o">=</span> <span class="nx">loadImage</span><span class="p">(</span><span class="dl">'</span><span class="s1">../data/bird.png</span><span class="dl">'</span><span class="p">);</span>
+  <span class="nx">img2</span> <span class="o">=</span> <span class="nx">loadImage</span><span class="p">(</span><span class="dl">'</span><span class="s1">../data/bird.png</span><span class="dl">'</span><span class="p">);</span>
+  <span class="nx">createCanvas</span><span class="p">(</span><span class="mi">890</span><span class="p">,</span> <span class="mi">261</span><span class="p">);</span>
+  <span class="nx">textAlign</span><span class="p">(</span><span class="nx">CENTER</span><span class="p">);</span>
+  <span class="nx">background</span><span class="p">(</span><span class="mi">240</span><span class="p">);</span>
+  <span class="nx">sel</span> <span class="o">=</span> <span class="nx">createSelect</span><span class="p">();</span>
+  <span class="nx">sel</span><span class="p">.</span><span class="nx">position</span><span class="p">(</span><span class="mi">500</span><span class="p">,</span> <span class="mi">1500</span><span class="p">);</span>
+  <span class="nx">sel</span><span class="p">.</span><span class="nx">option</span><span class="p">(</span><span class="dl">'</span><span class="s1">Escala de grises</span><span class="dl">'</span><span class="p">);</span>
+  <span class="nx">sel</span><span class="p">.</span><span class="nx">option</span><span class="p">(</span><span class="dl">'</span><span class="s1">Blur</span><span class="dl">'</span><span class="p">);</span>
+  <span class="nx">sel</span><span class="p">.</span><span class="nx">option</span><span class="p">(</span><span class="dl">'</span><span class="s1">Ascii</span><span class="dl">'</span><span class="p">);</span>
+  <span class="nx">sel</span><span class="p">.</span><span class="nx">selected</span><span class="p">(</span><span class="dl">'</span><span class="s1">Sharpen</span><span class="dl">'</span><span class="p">);</span>
+  <span class="nx">sel</span><span class="p">.</span><span class="nx">changed</span><span class="p">(</span><span class="nx">mySelectEvent</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kd">function</span> <span class="nx">draw</span><span class="p">(){</span>
+  <span class="nx">image</span><span class="p">(</span><span class="nx">img</span><span class="p">,</span> <span class="mi">445</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+  
+<span class="p">}</span>
+
+<span class="kd">function</span> <span class="nx">mySelectEvent</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kd">let</span> <span class="nx">item</span> <span class="o">=</span> <span class="nx">sel</span><span class="p">.</span><span class="nx">value</span><span class="p">();</span>
+  <span class="nx">background</span><span class="p">(</span><span class="mi">250</span><span class="p">);</span>
+  <span class="k">if</span><span class="p">(</span><span class="nx">item</span> <span class="o">==</span> <span class="dl">'</span><span class="s1">Blur</span><span class="dl">'</span><span class="p">){</span>
+   <span class="nx">blur</span><span class="p">();</span>
+  <span class="p">}</span>
+  <span class="k">if</span><span class="p">(</span><span class="nx">item</span> <span class="o">==</span> <span class="dl">'</span><span class="s1">Escala de grises</span><span class="dl">'</span><span class="p">){</span>
+   <span class="nx">w_and_b</span><span class="p">();</span>
+   <span class="nx">image</span><span class="p">(</span><span class="nx">out</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+  <span class="p">}</span>
+  <span class="k">if</span><span class="p">(</span><span class="nx">item</span> <span class="o">==</span> <span class="dl">'</span><span class="s1">Ascii</span><span class="dl">'</span><span class="p">){</span>
+   <span class="nx">ascii</span><span class="p">();</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kd">function</span> <span class="nx">blur</span> <span class="p">(){</span>
+  <span class="nx">out</span> <span class="o">=</span> <span class="nx">img2</span><span class="p">;</span>
+  <span class="nx">out</span><span class="p">.</span><span class="nx">loadPixels</span><span class="p">();</span>
+  
+  <span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">x</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="nx">x</span> <span class="o">&lt;</span> <span class="nx">img</span><span class="p">.</span><span class="nx">width</span><span class="p">;</span> <span class="nx">x</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">y</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="nx">y</span> <span class="o">&lt;</span> <span class="nx">img</span><span class="p">.</span><span class="nx">height</span><span class="p">;</span> <span class="nx">y</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+      <span class="kd">let</span> <span class="nx">sum</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> 
+      <span class="k">for</span> <span class="p">(</span><span class="nx">kx</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span> <span class="nx">kx</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">;</span> <span class="nx">kx</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">for</span> <span class="p">(</span><span class="nx">ky</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span> <span class="nx">ky</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">;</span> <span class="nx">ky</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+          <span class="kd">let</span> <span class="nx">xpos</span> <span class="o">=</span> <span class="nx">x</span> <span class="o">+</span> <span class="nx">kx</span><span class="p">;</span>
+          <span class="kd">let</span> <span class="nx">ypos</span> <span class="o">=</span> <span class="nx">y</span> <span class="o">+</span> <span class="nx">ky</span><span class="p">;</span>
+          <span class="kd">let</span> <span class="nx">val</span> <span class="o">=</span> <span class="nx">red</span><span class="p">(</span><span class="nx">img</span><span class="p">.</span><span class="kd">get</span><span class="p">(</span><span class="nx">xpos</span><span class="p">,</span> <span class="nx">ypos</span><span class="p">));</span>
+          <span class="nx">sum</span> <span class="o">+=</span> <span class="nx">kernel</span><span class="p">[</span><span class="nx">kx</span><span class="o">+</span><span class="mi">1</span><span class="p">][</span><span class="nx">ky</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="nx">val</span><span class="p">;</span>
+        <span class="p">}</span>
+      <span class="p">}</span>
+      <span class="nx">out</span><span class="p">.</span><span class="kd">set</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span> <span class="nx">y</span><span class="p">,</span> <span class="nx">color</span><span class="p">(</span><span class="nx">sum</span><span class="p">));</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+  <span class="nx">out</span><span class="p">.</span><span class="nx">updatePixels</span><span class="p">();</span>
+<span class="p">}</span>
+
+
+<span class="kd">function</span> <span class="nx">w_and_b</span><span class="p">(){</span>
+  <span class="nx">out</span> <span class="o">=</span> <span class="nx">img2</span><span class="p">;</span>
+  <span class="nx">out</span><span class="p">.</span><span class="nx">loadPixels</span><span class="p">();</span>
+  <span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">x</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="nx">x</span> <span class="o">&lt;</span> <span class="nx">out</span><span class="p">.</span><span class="nx">width</span><span class="p">;</span> <span class="nx">x</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">y</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="nx">y</span> <span class="o">&lt;</span> <span class="nx">out</span><span class="p">.</span><span class="nx">height</span><span class="p">;</span> <span class="nx">y</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+      <span class="kd">let</span> <span class="nx">index</span> <span class="o">=</span> <span class="p">(</span><span class="nx">x</span> <span class="o">+</span> <span class="nx">y</span> <span class="o">*</span> <span class="nx">out</span><span class="p">.</span><span class="nx">width</span><span class="p">)</span> <span class="o">*</span> <span class="mi">4</span>
+      <span class="kd">let</span> <span class="nx">r</span> <span class="o">=</span> <span class="nx">out</span><span class="p">.</span><span class="nx">pixels</span><span class="p">[</span><span class="nx">index</span> <span class="o">+</span> <span class="mi">0</span><span class="p">];</span>
+      <span class="kd">let</span> <span class="nx">g</span> <span class="o">=</span> <span class="nx">out</span><span class="p">.</span><span class="nx">pixels</span><span class="p">[</span><span class="nx">index</span> <span class="o">+</span> <span class="mi">1</span><span class="p">];</span>
+      <span class="kd">let</span> <span class="nx">b</span> <span class="o">=</span> <span class="nx">out</span><span class="p">.</span><span class="nx">pixels</span><span class="p">[</span><span class="nx">index</span> <span class="o">+</span> <span class="mi">2</span><span class="p">];</span>
+      <span class="kd">let</span> <span class="nx">sum</span> <span class="o">=</span> <span class="p">(</span><span class="nx">r</span> <span class="o">+</span> <span class="nx">g</span> <span class="o">+</span> <span class="nx">b</span><span class="p">)</span><span class="o">/</span><span class="mi">3</span><span class="p">;</span> 
+      <span class="nx">out</span><span class="p">.</span><span class="kd">set</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span> <span class="nx">y</span><span class="p">,</span> <span class="nx">color</span><span class="p">(</span><span class="nx">sum</span><span class="p">,</span> <span class="nx">sum</span><span class="p">,</span> <span class="nx">sum</span><span class="p">));</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+  <span class="nx">out</span><span class="p">.</span><span class="nx">updatePixels</span><span class="p">();</span>
+<span class="p">}</span>
+
+<span class="kd">function</span> <span class="nx">ascii</span><span class="p">(){</span>
+  <span class="kd">let</span> <span class="nx">ascii</span> <span class="o">=</span> <span class="p">[];</span>
+  <span class="kd">let</span> <span class="nx">resolution</span> <span class="o">=</span> <span class="mi">7</span><span class="p">;</span>  
+  <span class="kd">let</span> <span class="nx">letters</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">@&amp;%#*vi&lt;&gt;+=^;,:'. </span><span class="dl">"</span><span class="p">;</span>
+  <span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="mi">256</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">let</span> <span class="nx">index</span> <span class="o">=</span> <span class="nx">int</span><span class="p">(</span><span class="nx">map</span><span class="p">(</span><span class="nx">i</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">256</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="nx">letters</span><span class="p">.</span><span class="nx">length</span><span class="p">));</span>
+    <span class="nx">ascii</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">=</span> <span class="nx">letters</span><span class="p">[</span><span class="nx">index</span><span class="p">];</span>
+  <span class="p">}</span>
+  <span class="nx">out</span> <span class="o">=</span> <span class="nx">img2</span><span class="p">;</span>
+  <span class="nx">out</span><span class="p">.</span><span class="nx">loadPixels</span><span class="p">();</span>
+  <span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">y</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">y</span> <span class="o">&lt;</span> <span class="nx">out</span><span class="p">.</span><span class="nx">height</span><span class="p">;</span> <span class="nx">y</span> <span class="o">+=</span> <span class="nx">resolution</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">x</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">x</span> <span class="o">&lt;</span> <span class="nx">out</span><span class="p">.</span><span class="nx">width</span><span class="p">;</span> <span class="nx">x</span> <span class="o">+=</span> <span class="nx">resolution</span><span class="p">)</span> <span class="p">{</span>
+      <span class="kd">let</span> <span class="nx">index</span> <span class="o">=</span> <span class="p">(</span><span class="nx">x</span> <span class="o">+</span> <span class="nx">y</span> <span class="o">*</span> <span class="nx">out</span><span class="p">.</span><span class="nx">width</span><span class="p">)</span> <span class="o">*</span> <span class="mi">4</span>
+      <span class="kd">let</span> <span class="nx">r</span> <span class="o">=</span> <span class="nx">out</span><span class="p">.</span><span class="nx">pixels</span><span class="p">[</span><span class="nx">index</span> <span class="o">+</span> <span class="mi">0</span><span class="p">];</span>
+      <span class="kd">let</span> <span class="nx">g</span> <span class="o">=</span> <span class="nx">out</span><span class="p">.</span><span class="nx">pixels</span><span class="p">[</span><span class="nx">index</span> <span class="o">+</span> <span class="mi">1</span><span class="p">];</span>
+      <span class="kd">let</span> <span class="nx">b</span> <span class="o">=</span> <span class="nx">out</span><span class="p">.</span><span class="nx">pixels</span><span class="p">[</span><span class="nx">index</span> <span class="o">+</span> <span class="mi">2</span><span class="p">];</span>
+      <span class="kd">let</span> <span class="nx">brig</span> <span class="o">=</span> <span class="p">(</span><span class="nx">r</span><span class="o">+</span><span class="nx">g</span><span class="o">+</span><span class="nx">b</span><span class="p">)</span><span class="o">/</span><span class="mi">3</span>
+      <span class="nx">text</span><span class="p">(</span><span class="nx">ascii</span><span class="p">[</span><span class="nx">int</span><span class="p">(</span><span class="nx">brig</span><span class="p">)],</span> <span class="nx">x</span><span class="p">,</span> <span class="nx">y</span><span class="p">);</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<hr />
+:ET

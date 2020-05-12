@@ -46,6 +46,7 @@
     <a class="sidebar-nav-item" href="/jsnarvaezb/"> jsnarvaezb</a>
     <a class="sidebar-nav-item" href="/diefrodriguezcha/"> diefrodriguezcha</a>
     <a class="sidebar-nav-item" href="/ascii/"> Video ascii</a>
+    <a class="sidebar-nav-item" href="/images"> Procesamiento de imágenes</a>
     <a class="sidebar-nav-item" href="/about/"> about</a>
           
   </nav>
@@ -81,37 +82,32 @@
 
 <script>
 let playing = false;
-let fingers;
+let simpson;
 let button;
 let ascii = [];
 let resolution = 7;
 let fontsize = 12;
 
 function setup() {
-  createCanvas(503, 238);
-  // especifica múltples formatos para distintos navegadores
-  //textSize(fontsize);
-  let letters = "@&%#*vi<>+=^;,:'. ";//" .`-_':,;^=+/\"|)\\<>)iv%xclrs{*}I?!][1taeo7zjLu" +
-  //"nT#JCwfy325Fp6mqSghVd4EgXPGZbYkOA&8U$@";
-  fingers = createVideo(['../data/homero.mov', '../data/homero.webm']);
+  createCanvas(506, 240);
+  let letters = "@&%#*vi<>+=^;,:'. ";
+  simpson = createVideo(['../data/homero.mov', '../data/homero.webm']);
   for (let i = 0; i < 256; i++) {
     let index = int(map(i, 0, 256, 0, letters.length));
     ascii[i] = letters[index];
   }
-  //console.log(ascii)
   button = createButton('play');
   button.mousePressed(toggleVid);
-  //fingers.loop();
   noStroke();
   fill(0);
 }
 
 function toggleVid() {
   if (playing) {
-    fingers.pause();
+    simpson.pause();
     button.html('play');
   } else {
-    fingers.loop();
+    simpson.loop();
     button.html('pause');
   }
   playing = !playing;
@@ -119,13 +115,13 @@ function toggleVid() {
 
 function draw() {
   background(255);
-  fingers.loadPixels();
+  simpson.loadPixels();
   for (let y = 0; y < height; y += resolution) {
     for (let x = 0; x < width; x += resolution) {
-      let index = (x + y * fingers.width) * 4
-      let r = fingers.pixels[index + 0];
-      let g = fingers.pixels[index + 1];
-      let b = fingers.pixels[index + 2];
+      let index = (x + y * simpson.width) * 4
+      let r = simpson.pixels[index + 0];
+      let g = simpson.pixels[index + 1];
+      let b = simpson.pixels[index + 2];
       let brig = (r+g+b)/3
       text(ascii[int(brig)], x, y);
     }
@@ -136,39 +132,32 @@ function draw() {
 <hr />
 
 <div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">let</span> <span class="nx">playing</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
-<span class="kd">let</span> <span class="nx">fingers</span><span class="p">;</span>
+<span class="kd">let</span> <span class="nx">simpson</span><span class="p">;</span>
 <span class="kd">let</span> <span class="nx">button</span><span class="p">;</span>
 <span class="kd">let</span> <span class="nx">ascii</span> <span class="o">=</span> <span class="p">[];</span>
 <span class="kd">let</span> <span class="nx">resolution</span> <span class="o">=</span> <span class="mi">7</span><span class="p">;</span>
 <span class="kd">let</span> <span class="nx">fontsize</span> <span class="o">=</span> <span class="mi">12</span><span class="p">;</span>
 
 <span class="kd">function</span> <span class="nx">setup</span><span class="p">()</span> <span class="p">{</span>
-  <span class="nx">createCanvas</span><span class="p">(</span><span class="mi">599</span><span class="p">,</span><span class="err"> </span><span class="mi">317</span><span class="p">);</span>
-  <span class="c1">// especifica múltples formatos para distintos navegadores</span>
-  <span class="c1">//textSize(fontsize);</span>
-  <span class="kd">let</span> <span class="nx">letters</span> <span class="o">=</span> <span class="dl">"</span><span class="s2"> .`-_':,;^=+/</span><span class="se">\"</span><span class="s2">|)</span><span class="se">\\</span><span class="s2">&lt;&gt;)iv%xclrs{*}I?!][1taeo7zjLu</span><span class="dl">"</span> <span class="o">+</span>
-  <span class="dl">"</span><span class="s2">nT#JCwfy325Fp6mqSghVd4EgXPGZbYkOA&amp;8U$@</span><span class="dl">"</span><span class="p">;</span>
-  <span class="nx">fingers</span> <span class="o">=</span> <span class="nx">createVideo</span><span class="p">([</span><span class="dl">'</span><span class="s1">../data/pixar.mov</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">../data/pixar.webm</span><span class="dl">'</span><span class="p">]);</span>
+  <span class="nx">createCanvas</span><span class="p">(</span><span class="mi">506</span><span class="p">,</span><span class="mi">240</span><span class="p">);</span>
+  <span class="kd">let</span> <span class="nx">letters</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">@&amp;%#*vi&lt;&gt;+=^;,:'. </span><span class="dl">"</span><span class="p">;</span>
+  <span class="nx">simpson</span> <span class="o">=</span> <span class="nx">createVideo</span><span class="p">([</span><span class="dl">'</span><span class="s1">../data/homero.mov</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">../data/homero.webm</span><span class="dl">'</span><span class="p">]);</span>
   <span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="mi">256</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
     <span class="kd">let</span> <span class="nx">index</span> <span class="o">=</span> <span class="nx">int</span><span class="p">(</span><span class="nx">map</span><span class="p">(</span><span class="nx">i</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">256</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="nx">letters</span><span class="p">.</span><span class="nx">length</span><span class="p">));</span>
-    <span class="c1">//console.log(int(abs(index)));</span>
-    <span class="nx">ascii</span><span class="p">[</span><span class="mi">255</span><span class="o">-</span><span class="nx">i</span><span class="p">]</span> <span class="o">=</span> <span class="nx">letters</span><span class="p">[</span><span class="nx">index</span><span class="p">];</span>
+    <span class="nx">ascii</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">=</span> <span class="nx">letters</span><span class="p">[</span><span class="nx">index</span><span class="p">];</span>
   <span class="p">}</span>
-  <span class="c1">//console.log(ascii)</span>
   <span class="nx">button</span> <span class="o">=</span> <span class="nx">createButton</span><span class="p">(</span><span class="dl">'</span><span class="s1">play</span><span class="dl">'</span><span class="p">);</span>
   <span class="nx">button</span><span class="p">.</span><span class="nx">mousePressed</span><span class="p">(</span><span class="nx">toggleVid</span><span class="p">);</span>
-  <span class="c1">//fingers.loop();</span>
   <span class="nx">noStroke</span><span class="p">();</span>
   <span class="nx">fill</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
-
 <span class="p">}</span>
 
 <span class="kd">function</span> <span class="nx">toggleVid</span><span class="p">()</span> <span class="p">{</span>
   <span class="k">if</span> <span class="p">(</span><span class="nx">playing</span><span class="p">)</span> <span class="p">{</span>
-    <span class="nx">fingers</span><span class="p">.</span><span class="nx">pause</span><span class="p">();</span>
+    <span class="nx">simpson</span><span class="p">.</span><span class="nx">pause</span><span class="p">();</span>
     <span class="nx">button</span><span class="p">.</span><span class="nx">html</span><span class="p">(</span><span class="dl">'</span><span class="s1">play</span><span class="dl">'</span><span class="p">);</span>
   <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-    <span class="nx">fingers</span><span class="p">.</span><span class="nx">loop</span><span class="p">();</span>
+    <span class="nx">simpson</span><span class="p">.</span><span class="nx">loop</span><span class="p">();</span>
     <span class="nx">button</span><span class="p">.</span><span class="nx">html</span><span class="p">(</span><span class="dl">'</span><span class="s1">pause</span><span class="dl">'</span><span class="p">);</span>
   <span class="p">}</span>
   <span class="nx">playing</span> <span class="o">=</span> <span class="o">!</span><span class="nx">playing</span><span class="p">;</span>
@@ -176,13 +165,13 @@ function draw() {
 
 <span class="kd">function</span> <span class="nx">draw</span><span class="p">()</span> <span class="p">{</span>
   <span class="nx">background</span><span class="p">(</span><span class="mi">255</span><span class="p">);</span>
-  <span class="nx">fingers</span><span class="p">.</span><span class="nx">loadPixels</span><span class="p">();</span>
+  <span class="nx">simpson</span><span class="p">.</span><span class="nx">loadPixels</span><span class="p">();</span>
   <span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">y</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">y</span> <span class="o">&lt;</span> <span class="nx">height</span><span class="p">;</span> <span class="nx">y</span> <span class="o">+=</span> <span class="nx">resolution</span><span class="p">)</span> <span class="p">{</span>
     <span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">x</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">x</span> <span class="o">&lt;</span> <span class="nx">width</span><span class="p">;</span> <span class="nx">x</span> <span class="o">+=</span> <span class="nx">resolution</span><span class="p">)</span> <span class="p">{</span>
-      <span class="kd">let</span> <span class="nx">index</span> <span class="o">=</span> <span class="p">(</span><span class="nx">x</span> <span class="o">+</span> <span class="nx">y</span> <span class="o">*</span> <span class="nx">fingers</span><span class="p">.</span><span class="nx">width</span><span class="p">)</span> <span class="o">*</span> <span class="mi">4</span>
-      <span class="kd">let</span> <span class="nx">r</span> <span class="o">=</span> <span class="nx">fingers</span><span class="p">.</span><span class="nx">pixels</span><span class="p">[</span><span class="nx">index</span> <span class="o">+</span> <span class="mi">0</span><span class="p">];</span>
-      <span class="kd">let</span> <span class="nx">g</span> <span class="o">=</span> <span class="nx">fingers</span><span class="p">.</span><span class="nx">pixels</span><span class="p">[</span><span class="nx">index</span> <span class="o">+</span> <span class="mi">1</span><span class="p">];</span>
-      <span class="kd">let</span> <span class="nx">b</span> <span class="o">=</span> <span class="nx">fingers</span><span class="p">.</span><span class="nx">pixels</span><span class="p">[</span><span class="nx">index</span> <span class="o">+</span> <span class="mi">2</span><span class="p">];</span>
+      <span class="kd">let</span> <span class="nx">index</span> <span class="o">=</span> <span class="p">(</span><span class="nx">x</span> <span class="o">+</span> <span class="nx">y</span> <span class="o">*</span> <span class="nx">simpson</span><span class="p">.</span><span class="nx">width</span><span class="p">)</span> <span class="o">*</span> <span class="mi">4</span>
+      <span class="kd">let</span> <span class="nx">r</span> <span class="o">=</span> <span class="nx">simpson</span><span class="p">.</span><span class="nx">pixels</span><span class="p">[</span><span class="nx">index</span> <span class="o">+</span> <span class="mi">0</span><span class="p">];</span>
+      <span class="kd">let</span> <span class="nx">g</span> <span class="o">=</span> <span class="nx">simpson</span><span class="p">.</span><span class="nx">pixels</span><span class="p">[</span><span class="nx">index</span> <span class="o">+</span> <span class="mi">1</span><span class="p">];</span>
+      <span class="kd">let</span> <span class="nx">b</span> <span class="o">=</span> <span class="nx">simpson</span><span class="p">.</span><span class="nx">pixels</span><span class="p">[</span><span class="nx">index</span> <span class="o">+</span> <span class="mi">2</span><span class="p">];</span>
       <span class="kd">let</span> <span class="nx">brig</span> <span class="o">=</span> <span class="p">(</span><span class="nx">r</span><span class="o">+</span><span class="nx">g</span><span class="o">+</span><span class="nx">b</span><span class="p">)</span><span class="o">/</span><span class="mi">3</span>
       <span class="nx">text</span><span class="p">(</span><span class="nx">ascii</span><span class="p">[</span><span class="nx">int</span><span class="p">(</span><span class="nx">brig</span><span class="p">)],</span> <span class="nx">x</span><span class="p">,</span> <span class="nx">y</span><span class="p">);</span>
     <span class="p">}</span>
