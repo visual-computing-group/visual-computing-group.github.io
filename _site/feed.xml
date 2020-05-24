@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.0.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2020-05-24T18:13:42-05:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Computación Visual</title><subtitle>Un grupo de Computación Visual de la Universidad Nacional de Colombia</subtitle><entry><title type="html">Video a ascci</title><link href="http://localhost:4000/jekyll/update/2020/05/24/welcome-to-jekyll.html" rel="alternate" type="text/html" title="Video a ascci" /><published>2020-05-24T11:39:07-05:00</published><updated>2020-05-24T11:39:07-05:00</updated><id>http://localhost:4000/jekyll/update/2020/05/24/welcome-to-jekyll</id><content type="html" xml:base="http://localhost:4000/jekyll/update/2020/05/24/welcome-to-jekyll.html">&lt;div id=&quot;myContainer&quot;&gt;&lt;/div&gt;
+&lt;div id=&quot;video&quot;&gt;&lt;/div&gt;
+&lt;div id=&quot;btn&quot;&gt;&lt;/div&gt;
+
+&lt;script src=&quot;https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.0.0/p5.js&quot;&gt;&lt;/script&gt;
+
+&lt;script src=&quot;/code/ascii_video.pde&quot;&gt;&lt;/script&gt;</content><author><name></name></author><summary type="html"></summary></entry></feed>

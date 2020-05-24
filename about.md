@@ -1,8 +1,0 @@
----
-layout: page
-title: About
----
-
-<p class="message">
-  Un grupo de Computación Visual de la Universidad Nacional de Colombia
-</p>

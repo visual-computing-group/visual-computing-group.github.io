@@ -1,0 +1,11 @@
+I"ı<div id="sketch-holder"></div>
+
+<p>Este es el cÃ³digo utilizado para este ejercicio.</p>
+
+<hr />
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.0.0/p5.js"></script>
+
+<canvas data-processing-sources="/code/convolution.pde"></canvas>
+<hr />
+:ET
